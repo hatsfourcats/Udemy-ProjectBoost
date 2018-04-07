@@ -7,6 +7,7 @@ TagManager:
   - SafeLevelGeom
   - FatalLevelGeom
   - DangerLevelGeom
+  - ExitPad
   layers:
   - Default
   - TransparentFX

@@ -9,11 +9,32 @@ public class RocketController : MonoBehaviour
     float rotationSpeed = 75f;
     [SerializeField]
     float thrustAmount = 10f;
+
+    [SerializeField]
+    int maxFuel = 600;
+
+    int currentFuel;
+    [SerializeField] int fuelBurnPerFrame = 1;
+
+
+
     Rigidbody rigidBody;
     AudioSource engineSound;
 
     GameManager gameManager;
 
+    public int CurrentFuel
+    {
+        get
+        {
+            return currentFuel;
+        }
+
+        set
+        {
+
+        }
+    }
 
 
     // Use this for initialization
@@ -22,6 +43,7 @@ public class RocketController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
         engineSound = GetComponent<AudioSource>();
         gameManager = GameObject.FindObjectOfType<GameManager>();
+        currentFuel = maxFuel;
     }
 
     // Update is called once per frame
@@ -53,24 +75,33 @@ public class RocketController : MonoBehaviour
 
         }
 
+        if (trigger.tag.Contains("Exit"))
+        {
+
+            Debug.LogFormat("Reached exit pad yay :");
+        }
+
 
     }
 
     void Thrust()
     {
 
-
         if (Input.GetKey(KeyCode.Space))
         {
+            if (currentFuel > 0)
+            {
 
-            rigidBody.AddRelativeForce(Vector3.up * thrustAmount);
+                rigidBody.AddRelativeForce(Vector3.up * thrustAmount);
 
-            if (!engineSound.isPlaying) { engineSound.Play(); } // TODO: figure out why this is popping every ~loop
+                if (!engineSound.isPlaying) { engineSound.Play(); } // TODO: figure out why this is popping every ~loop
 
-            engineSound.DOFade(1, 1);
+                engineSound.DOFade(1, 1);
+                currentFuel -= fuelBurnPerFrame;
+            }
+            else { Debug.LogFormat("Current fuel is less than 0 : {0}", currentFuel); }
 
         }
-
 
         else
         {
