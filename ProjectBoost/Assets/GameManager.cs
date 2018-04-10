@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     Vector3 launchPosition;
     public Text fuelValueText;
     RocketController rocketController;
+    LevelManager levelManager;
 
 
     // Use this for initialization
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
         launchPad = GameObject.FindObjectOfType<LaunchPad>();
         launchPosition = launchPad.transform.position + new Vector3(launchPosition.x, 3, launchPosition.z);
         rocketController = GameObject.FindObjectOfType<RocketController>();
+        levelManager = GameObject.FindObjectOfType<LevelManager>();
     }
 
     // Update is called once per frame
@@ -38,4 +40,11 @@ public class GameManager : MonoBehaviour
         var newPlayer = Instantiate(rocketPrefab, launchPosition, Quaternion.identity);
         rocketController = newPlayer.GetComponent<RocketController>();
     }
+
+    public void GoNextLevel()
+    {
+        levelManager.LoadNextLevel();
+
+    }
+
 }

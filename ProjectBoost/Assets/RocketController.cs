@@ -77,7 +77,7 @@ public class RocketController : MonoBehaviour
 
         if (trigger.tag.Contains("Exit"))
         {
-
+            gameManager.GoNextLevel();
             Debug.LogFormat("Reached exit pad yay :");
         }
 
